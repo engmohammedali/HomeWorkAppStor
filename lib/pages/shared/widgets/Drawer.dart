@@ -71,29 +71,27 @@ class MyDrawer extends StatelessWidget {
           ),
           Card(
             child: ListTile(
-              leading: Icon(Icons.login),
-              title: Text('Login'),
-              trailing: Icon(Icons.navigate_next),
-              onTap: () {
-                if (context.read<Model>().getchecklogin()) {
-                  AwesomeDialog(
-                    context: context,
-                    dialogType: DialogType.error,
-                    animType: AnimType.rightSlide,
-                    title: 'You have already logged in',
-                    desc: '',
-                    btnCancelOnPress: () {},
-                    btnOkOnPress: () {},
-                  ).show();
-                } else {
+                leading: Icon(Icons.login),
+                title: Text('Login'),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () {
+                  // if (context.read<Model>().getchecklogin()) {
+                  //   AwesomeDialog(
+                  //     context: context,
+                  //     dialogType: DialogType.error,
+                  //     animType: AnimType.rightSlide,
+                  //     title: 'You have already logged in',
+                  //     desc: '',
+                  //     btnCancelOnPress: () {},
+                  //     btnOkOnPress: () {},
+                  //   ).show();
+                  // } else {}
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (_) => Login(),
                     ),
                   );
-                }
-              },
-            ),
+                }),
           ),
           Card(
             child: ListTile(
@@ -101,8 +99,8 @@ class MyDrawer extends StatelessWidget {
               title: Text('Logout'),
               trailing: Icon(Icons.navigate_next),
               onTap: () async {
-                context.read<Model>().islogin(false);
-                await FirebaseAuth.instance.signOut();
+                // context.read<Model>().islogin(false);
+                // await FirebaseAuth.instance.signOut();
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) => Login(),

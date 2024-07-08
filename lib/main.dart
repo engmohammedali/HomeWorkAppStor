@@ -1,4 +1,5 @@
 import 'package:appstore/firebase_options.dart';
+import 'package:appstore/pages/auth/login.dart';
 import 'package:appstore/pages/cart/Mybasket.dart';
 import 'package:appstore/pages/home/home_page.dart';
 
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowMaterialGrid: false,
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: Login(),
         // home: StreamBuilder(
         //     stream: FirebaseAuth.instance.authStateChanges(),
         //     builder: ((context, snapshot) {

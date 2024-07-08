@@ -1,12 +1,13 @@
+import 'dart:convert';
+
 import 'package:appstore/pages/auth/register.dart';
-import 'package:appstore/pages/shared/models/Provider.dart';
+import 'package:appstore/pages/home/home_page.dart';
 import 'package:appstore/pages/shared/widgets/Snackbar.dart';
 import 'package:appstore/pages/shared/widgets/const.dart';
 import 'package:appstore/pages/shared/widgets/custombuttonauth.dart';
 import 'package:appstore/pages/shared/widgets/customlogoauth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   Login({super.key});
@@ -18,27 +19,44 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _key = GlobalKey<FormState>();
   // TextEditingController username = TextEditingController();
-  TextEditingController email = TextEditingController();
+  TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   bool isVisble = true;
   bool isloding = false;
-   // ignore: prefer_typing_uninitialized_variables
-  
+  // ignore: prefer_typing_uninitialized_variables
 
+  Future<void> login() async {
+    print("object");
+    setState(() {
+      isloding = true;
+    });
+    final url = Uri.parse('https://dummyjson.com/users/add');
+    final response = await http.post(url,
+        // headers: {'Content-Type': 'application/json'},
+        body: json
+            .encode({'username': username.text, 'password': password.text}));
 
-  loginUser() async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email.text, password: password.text);
-      ShowsnackBar(context, 'Done....');
-      
-      
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        ShowsnackBar(context, 'No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        ShowsnackBar(context, 'Wrong password provided for that user.');
-      }
+    if (response.statusCode == 200 || response.statusCode == 200) {
+      ShowsnackBar(context, "You have been logged in successfully");
+
+      print(response.body);
+      final data = json.decode(response.body);
+      final token = data['token'];
+      print('Login successful. Token: $token');
+
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomePage()));
+    } else {
+      print("no");
+      ShowsnackBar(
+          context, 'Login failed. Status code: ${response.statusCode}');
+      print('Response: ${response.body}');
+    }
+
+    if (mounted) {
+      setState(() {
+        isloding = false;
+      });
     }
   }
 
@@ -73,20 +91,21 @@ class _LoginState extends State<Login> {
               // ),
               Container(height: 20),
               const Text(
-                "Email",
+                "Username",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               Container(height: 10),
               TextFormField(
-                    validator: (email) {
-                      if (email!.contains(RegExp( r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"))) {
-                 return "Enter a valid emial";
-                      }
-                    },
-                controller: email,
+                // validator: (email) {
+                //   if (email!.contains(RegExp(
+                //       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"))) {
+                //     return "Enter a valid emial";
+                //   }
+                // },
+                controller: username,
                 keyboardType: TextInputType.emailAddress,
                 decoration: decoration.copyWith(
-                    hintText: "Enter your email :",
+                    hintText: "Enter your username :",
                     suffixIcon: Icon(Icons.email)),
               ),
               Container(height: 10),
@@ -98,8 +117,7 @@ class _LoginState extends State<Login> {
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (password) {
-                  
-                  if ( password!.length < 8) {
+                  if (password!.length < 8) {
                     return "Enter a valid password";
                   }
                 },
@@ -135,13 +153,12 @@ class _LoginState extends State<Login> {
                 )
               : CustomButtonAuth(
                   title: "login",
-                  onPressed: () {
-                    loginUser();
+                  onPressed: () async {
+                    await login();
                     // if (_key.currentState!.validate()) {
-                    //    loginUser();
+
                     // }
                   }),
-          Container(height: 20),
 
           Container(height: 20),
           // Text("Don't Have An Account ? Resister" , textAlign: TextAlign.center,)
@@ -165,5 +182,13 @@ class _LoginState extends State<Login> {
         ]),
       ),
     );
+  }
+
+  void dispose() {
+    username.clear();
+
+    password.clear();
+    // TODO: implement dispose
+    super.dispose();
   }
 }

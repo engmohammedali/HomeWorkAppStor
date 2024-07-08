@@ -1,7 +1,4 @@
-import 'package:appstore/pages/auth/login.dart';
 import 'package:appstore/pages/shared/models/Provider.dart';
-import 'package:appstore/pages/shared/widgets/Snackbar.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,35 +16,35 @@ class _MyBasketState extends State<MyBasket> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (context.watch<Model>().countProducts() == 0) {
-            AwesomeDialog(
-              context: context,
-              dialogType: DialogType.info,
-              animType: AnimType.rightSlide,
-              title: 'The basket is empty',
-              desc: 'Please select a product',
-              btnCancelOnPress: () {},
-              btnOkOnPress: () {},
-            )..show();
-          } else if (context.read<Model>().getchecklogin()) {
-            provider.removeAllProduct();
-            ShowsnackBar(context, " Was purchased");
-          } else {
-            AwesomeDialog(
-              context: context,
-              dialogType: DialogType.error,
-              animType: AnimType.rightSlide,
-              title: 'Please login',
-              desc: '',
-              btnCancelOnPress: () {},
-              btnOkText: "Login",
-              btnCancelText: "Cancel",
-              btnOkOnPress: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Login()));
-              },
-            )..show();
-          }
+          // if (context.watch<Model>().countProducts() == 0) {
+          //   AwesomeDialog(
+          //     context: context,
+          //     dialogType: DialogType.info,
+          //     animType: AnimType.rightSlide,
+          //     title: 'The basket is empty',
+          //     desc: 'Please select a product',
+          //     btnCancelOnPress: () {},
+          //     btnOkOnPress: () {},
+          //   )..show();
+          // } else if (context.read<Model>().getchecklogin()) {
+          //   provider.removeAllProduct();
+          //   ShowsnackBar(context, " Was purchased");
+          // } else {
+          //   AwesomeDialog(
+          //     context: context,
+          //     dialogType: DialogType.error,
+          //     animType: AnimType.rightSlide,
+          //     title: 'Please login',
+          //     desc: '',
+          //     btnCancelOnPress: () {},
+          //     btnOkText: "Login",
+          //     btnCancelText: "Cancel",
+          //     btnOkOnPress: () {
+          //       Navigator.push(
+          //           context, MaterialPageRoute(builder: (context) => Login()));
+          //     },
+          //   )..show();
+          // }
         },
         child: Text("Buy"),
       ),
@@ -105,12 +102,13 @@ class _MyBasketState extends State<MyBasket> {
                   subtitle: Text(
                       "${provider.getAllProdectMyBasket()[index].price.toStringAsFixed(2)}\$"),
                   trailing: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       IconButton(
                           onPressed: () {
-                            provider.addToListMyBasket(
-                              provider.getAllProdectMyBasket()[index],
-                            );
+                            // provider.addToListMyBasket(
+                            //   provider.getAllProdectMyBasket()[index],
+                            // );
                           },
                           icon: Icon(Icons.add)),
                       IconButton(

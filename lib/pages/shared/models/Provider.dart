@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:appstore/pages/shared/models/products_response.dart';
+import 'package:appstore/pages/shared/widgets/Snackbar.dart';
+import 'package:appstore/services/api.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class Model extends ChangeNotifier {
-  late SharedPreferences prefs;
-
+  // late SharedPreferences prefs;
+  
   final List<Product> _prodects = [];
   double _totleprice = 0;
   addToListMyBasket(Product newproduct) {
@@ -38,14 +43,44 @@ class Model extends ChangeNotifier {
     return _prodects.length;
   }
 
-  islogin(bool islogin) async {
-    prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('islogin', islogin);
-  }
+  // islogin(bool islogin) async {
+  //   prefs = await SharedPreferences.getInstance();
+  //   await prefs.setBool('islogin', islogin);
+  // }
 
-  getchecklogin() async {
-    return await prefs.getBool('islogin');
-  }
+  // getchecklogin() async {
+  //   return await prefs.getBool('islogin');
+  // }
+
+
+
+  //    Future<void> addCart() async {
+   
+  //   final url = Uri.parse('https://dummyjson.com/carts/add');
+  //   final response = await post(
+  //     url,
+  //     headers: {'Content-Type': 'application/json'},
+  //     body: json.encode( 
+  
+    
+  //   )
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     // ShowsnackBar(context, "Account successfully created");
+  //     final data = json.decode(response.body);
+  //     final token = data['token'];
+  //     print('Login successful. Token: $token');
+     
+  //   } else {
+  //     // ShowsnackBar(
+  //     //     context, " Login failed. Status code: ${response.statusCode}");
+  //     // print('Response: ${response.body}');
+  //   }
+   
+  // }
+
+  
 }
 
 

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:appstore/pages/auth/login.dart';
 import 'package:appstore/pages/shared/widgets/Snackbar.dart';
@@ -180,7 +181,9 @@ class _RegistreState extends State<Registre> {
       ),
     );
   }
-    void dispose() {
+
+  @override
+  void dispose() {
     username.clear();
     email.clear();
     password.clear();

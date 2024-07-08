@@ -49,10 +49,10 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           // slider
-          Expanded(
-            flex: 3,
-            child: _slider(),
-          ),
+          // Expanded(
+          //   flex: 3,
+          //   // child: _slider(),
+          // ),
 
           // Most Selling Products
           Expanded(

@@ -65,20 +65,20 @@ class _ProductWidgetState extends State<ProductWidget> {
                       ),
                       IconButton(
                         onPressed: () {
-                          ischooseproduct = !ischooseproduct;
-
+                          // ischooseproduct = !ischooseproduct;
+                                  provider.addToListMyBasket(
+                              widget.product,
+                            );
                           // TODO: ADD TO CART
-                          if (ischooseproduct) {
-                            provider.addToListMyBasket(
-                              widget.product,
-                            );
-                          }
+                          // if (ischooseproduct) {
+                        // 
+                          // }
                           
-                          else {
-                            provider.removeProduct(
-                              widget.product,
-                            );
-                          }
+                          // else {
+                          //   provider.removeProduct(
+                          //     widget.product,
+                          //   );
+                          // }
                    
                         },
                         icon: const Icon(
