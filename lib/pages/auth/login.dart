@@ -32,11 +32,11 @@ class _LoginState extends State<Login> {
     });
     final url = Uri.parse('https://dummyjson.com/users/add');
     final response = await http.post(url,
-        // headers: {'Content-Type': 'application/json'},
+         headers: { 'Content-Type': 'application/json' },
         body: json
             .encode({'username': username.text, 'password': password.text}));
 
-    if (response.statusCode == 200 || response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       ShowsnackBar(context, "You have been logged in successfully");
 
       print(response.body);
@@ -96,12 +96,6 @@ class _LoginState extends State<Login> {
               ),
               Container(height: 10),
               TextFormField(
-                // validator: (email) {
-                //   if (email!.contains(RegExp(
-                //       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"))) {
-                //     return "Enter a valid emial";
-                //   }
-                // },
                 controller: username,
                 keyboardType: TextInputType.emailAddress,
                 decoration: decoration.copyWith(

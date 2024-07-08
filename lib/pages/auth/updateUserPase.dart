@@ -1,37 +1,35 @@
 import 'dart:convert';
-import 'dart:math';
 
-import 'package:appstore/pages/auth/login.dart';
 import 'package:appstore/pages/shared/widgets/Snackbar.dart';
 import 'package:appstore/pages/shared/widgets/const.dart';
 import 'package:appstore/pages/shared/widgets/custombuttonauth.dart';
 import 'package:appstore/pages/shared/widgets/customlogoauth.dart';
-import 'package:appstore/services/api.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Registre extends StatefulWidget {
-  const Registre({super.key});
+class UpdateUser extends StatefulWidget {
+  const UpdateUser({super.key});
 
   @override
-  State<Registre> createState() => _RegistreState();
+  State<UpdateUser> createState() => _UpdateUserPage();
 }
 
-class _RegistreState extends State<Registre> {
+class _UpdateUserPage extends State<UpdateUser> {
   final _keyForm = GlobalKey<FormState>();
   TextEditingController username = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   bool isVisble = true;
   bool isloding = false;
-
-  Future<void> registerUser() async {
+  int? id;
+  Future<void> updateUser() async {
     setState(() {
       isloding = true;
     });
 
-    final url = Uri.parse('https://dummyjson.com/users/add');
-    final response = await post(
+    final url = Uri.parse('https://dummyjson.com/users/$id');
+    final response = await http.put(
       url,
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
@@ -41,22 +39,38 @@ class _RegistreState extends State<Registre> {
       }),
     );
 
-    if (response.statusCode == 201 || response.statusCode == 200) {
+    if (response.statusCode == 200) {
       final data = json.decode(response.body);
       final token = data['token'];
       print(response.body);
       print('Login successful. Token: $token');
-      ShowsnackBar(context, "Account successfully created");
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+      ShowsnackBar(context, "Account successfully Updated");
     } else {
       ShowsnackBar(
-          context, " Login failed. Status code: ${response.statusCode}");
+          context, " update failed. Status code: ${response.statusCode}");
       print('Response: ${response.body}');
     }
 
     setState(() {
       isloding = false;
     });
+  }
+
+  // getuserDate() async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   id = prefs.getInt('id');
+  //   final response =
+  //       await http.get(Uri.parse('https://dummyjson.com/users/$id'));
+  //   var data = jsonDecode(response.body);
+  //   username.text = data['username'];
+  //   email.text = data['email'];
+  //   password.text = data['password'];
+  // }
+
+  @override
+  void initState() {
+    // getuserDate();
+    super.initState();
   }
 
   @override
@@ -71,13 +85,13 @@ class _RegistreState extends State<Registre> {
             children: [
               Container(height: 50),
               CustomLogoAuth(
-                logo: "assets/logo/registre.png",
+                logo: "assets/update.jpeg",
               ),
               Container(height: 20),
-              const Text("Registre",
+              const Text("UpdateUser",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
               Container(height: 10),
-              const Text("Registre To Continue Using The App",
+              const Text("UpdateUser To Continue Using The App",
                   style: TextStyle(color: Colors.grey)),
               Container(height: 20),
               const Text(
@@ -138,45 +152,19 @@ class _RegistreState extends State<Registre> {
                             ? Icon(Icons.visibility)
                             : Icon(Icons.visibility_off))),
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 10, bottom: 20),
-                alignment: Alignment.topRight,
-                child: Text(
-                  "Forgot Password ?",
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-              ),
             ],
           ),
+          Container(height: 30),
           isloding
               ? Center(child: CircularProgressIndicator())
               : CustomButtonAuth(
-                  title: "Registre",
+                  title: "UpdateUser",
                   onPressed: () {
                     // if (_keyForm.currentState!.validate()) {
-                    registerUser();
+                    updateUser();
                     // }
                   }),
           Container(height: 20),
-          InkWell(
-            onTap: () {
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => Login()));
-            },
-            child: const Center(
-              child: Text.rich(TextSpan(children: [
-                TextSpan(
-                  text: "Have An Account ? ",
-                ),
-                TextSpan(
-                    text: "Login",
-                    style: TextStyle(
-                        color: Colors.orange, fontWeight: FontWeight.bold)),
-              ])),
-            ),
-          )
         ]),
       ),
     );

@@ -5,9 +5,9 @@ import 'package:appstore/pages/shared/widgets/Snackbar.dart';
 import 'package:appstore/pages/shared/widgets/const.dart';
 import 'package:appstore/pages/shared/widgets/custombuttonauth.dart';
 import 'package:appstore/pages/shared/widgets/customlogoauth.dart';
-import 'package:appstore/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Registre extends StatefulWidget {
   const Registre({super.key});
@@ -46,6 +46,11 @@ class _RegistreState extends State<Registre> {
       print(response.body);
       print('Login successful. Token: $token');
       ShowsnackBar(context, "Account successfully created");
+
+      // final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+// await prefs.setInt('id', data['id']);
+      // await prefs.setString('token', data['token']);
       Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
     } else {
       ShowsnackBar(
@@ -180,7 +185,8 @@ class _RegistreState extends State<Registre> {
       ),
     );
   }
-    void dispose() {
+
+  void dispose() {
     username.clear();
     email.clear();
     password.clear();

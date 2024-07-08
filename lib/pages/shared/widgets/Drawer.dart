@@ -1,12 +1,9 @@
 import 'package:appstore/pages/auth/login.dart';
+import 'package:appstore/pages/auth/updateUserPase.dart';
 import 'package:appstore/pages/cart/Mybasket.dart';
 import 'package:appstore/pages/home/home_page.dart';
 import 'package:appstore/pages/products/ProductsPage.dart';
-import 'package:appstore/pages/shared/models/Provider.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -92,6 +89,21 @@ class MyDrawer extends StatelessWidget {
                     ),
                   );
                 }),
+          ),
+          Card(
+            child: ListTile(
+              leading: Icon(Icons.login),
+              title: Text('Update User'),
+              trailing: Icon(Icons.navigate_next),
+              onTap: () async {
+          
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) =>   UpdateUser(),
+                  ),
+                );
+              },
+            ),
           ),
           Card(
             child: ListTile(

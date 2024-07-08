@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowMaterialGrid: false,
         debugShowCheckedModeBanner: false,
-        home: Login(),
+        home: HomePage(),
         // home: StreamBuilder(
         //     stream: FirebaseAuth.instance.authStateChanges(),
         //     builder: ((context, snapshot) {
